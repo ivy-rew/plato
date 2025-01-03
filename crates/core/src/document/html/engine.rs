@@ -11,7 +11,7 @@ use crate::helpers::{Normalize, decode_entities};
 use crate::framebuffer::{Framebuffer, Pixmap};
 use crate::font::{FontOpener, FontFamily};
 use crate::document::{Document, Location};
-use crate::document::pdf::PdfOpener;
+//use crate::document::pdf::PdfOpener;
 use crate::unit::{mm_to_px, pt_to_px};
 use crate::geom::{Point, Vec2, Rectangle, Edge};
 use crate::settings::{HYPHEN_PENALTY, STRETCH_TOLERANCE};
@@ -760,19 +760,19 @@ impl Engine {
                     let dpi = self.dpi;
 
                     if let Ok(buf) = resource_fetcher.fetch(path) {
-                        if let Some(doc) = PdfOpener::new().and_then(|opener| opener.open_memory(path, &buf)) {
-                            if let Some((w, h)) = doc.dims(0) {
-                                if width == 0 && height == 0 {
-                                    width = pt_to_px(w, dpi).round() as i32;
-                                    height = pt_to_px(h, dpi).round() as i32;
-                                } else if width != 0 {
-                                    height = (width as f32 * h / w).round() as i32;
-                                } else if height != 0 {
-                                    width = (height as f32 * w / h).round() as i32;
-                                }
-                                scale = width as f32 / w;
-                            }
-                        }
+                        // if let Some(doc) = PdfOpener::new().and_then(|opener| opener.open_memory(path, &buf)) {
+                        //     if let Some((w, h)) = doc.dims(0) {
+                        //         if width == 0 && height == 0 {
+                        //             width = pt_to_px(w, dpi).round() as i32;
+                        //             height = pt_to_px(h, dpi).round() as i32;
+                        //         } else if width != 0 {
+                        //             height = (width as f32 * h / w).round() as i32;
+                        //         } else if height != 0 {
+                        //             width = (height as f32 * w / h).round() as i32;
+                        //         }
+                        //         scale = width as f32 / w;
+                        //     }
+                        // }
 
                         if width * height > 0 {
                             let element = ImageElement {
@@ -1692,16 +1692,16 @@ impl Engine {
                     font.render(&mut fb, *color, &plan, position);
                 },
                 DrawCommand::Image(ImageCommand { position, path, scale, .. }) => {
-                    if let Ok(buf) = resource_fetcher.fetch(path) {
-                        if let Some((pixmap, _)) = PdfOpener::new().and_then(|opener| {
-                            opener.open_memory(path, &buf)
-                        }).and_then(|mut doc| {
-                            doc.pixmap(Location::Exact(0), scale_factor * *scale)
-                        }) {
-                            let position = Point::from(scale_factor * Vec2::from(*position));
-                            fb.draw_pixmap(&pixmap, position);
-                        }
-                    }
+                    // if let Ok(buf) = resource_fetcher.fetch(path) {
+                    //     if let Some((pixmap, _)) = PdfOpener::new().and_then(|opener| {
+                    //         opener.open_memory(path, &buf)
+                    //     }).and_then(|mut doc| {
+                    //         doc.pixmap(Location::Exact(0), scale_factor * *scale)
+                    //     }) {
+                    //         let position = Point::from(scale_factor * Vec2::from(*position));
+                    //         fb.draw_pixmap(&pixmap, position);
+                    //     }
+                    // }
                 },
                 _ => (),
             }

@@ -15,7 +15,7 @@ use crate::document::{Document, SimpleTocEntry, TextLocation};
 use crate::document::asciify;
 use crate::document::epub::EpubDocument;
 use crate::document::html::HtmlDocument;
-use crate::document::pdf::PdfOpener;
+//use crate::document::pdf::PdfOpener;
 use crate::document::djvu::DjvuOpener;
 use crate::helpers::datetime_format;
 
@@ -794,13 +794,13 @@ pub fn extract_metadata_from_document(prefix: &Path, info: &mut Info) {
             }
         },
         "pdf" => {
-            match PdfOpener::new().and_then(|o| o.open(path)) {
-                Some(doc) => {
-                    info.title = doc.title().unwrap_or_default();
-                    info.author = doc.author().unwrap_or_default();
-                },
-                None => eprintln!("Can't open {}.", info.file.path.display()),
-            }
+            // match PdfOpener::new().and_then(|o| o.open(path)) {
+            //     Some(doc) => {
+            //         info.title = doc.title().unwrap_or_default();
+            //         info.author = doc.author().unwrap_or_default();
+            //     },
+            //     None => eprintln!("Can't open {}.", info.file.path.display()),
+            // }
         },
         "djvu" | "djv" => {
             match DjvuOpener::new().and_then(|o| o.open(path)) {

@@ -11,7 +11,7 @@ use crate::helpers::{Normalize, decode_entities};
 use crate::document::{Document, Location, TextLocation, TocEntry, BoundedText, chapter_from_uri};
 use crate::unit::pt_to_px;
 use crate::geom::{Boundary, CycleDir};
-use super::pdf::PdfOpener;
+//use super::pdf::PdfOpener;
 use super::html::dom::{XmlTree, NodeRef};
 use super::html::engine::{Page, Engine, ResourceFetcher};
 use super::html::layout::{StyleData, LoopContext};
@@ -582,27 +582,28 @@ impl EpubDocument {
 
 impl Document for EpubDocument {
     fn preview_pixmap(&mut self, width: f32, height: f32) -> Option<Pixmap> {
-        let opener = PdfOpener::new()?;
-        self.cover_image()
-            .map(|path| self.parent.join(path)
-                            .to_string_lossy().into_owned())
-            .and_then(|path| {
-                self.archive.fetch(&path).ok()
-                    .and_then(|buf| opener.open_memory(&path, &buf))
-                    .and_then(|mut doc| {
-                        doc.dims(0).and_then(|dims| {
-                            let scale = (width / dims.0).min(height / dims.1);
-                            doc.pixmap(Location::Exact(0), scale)
-                        })
-                    })
-            })
-            .or_else(|| {
-                self.dims(0).and_then(|dims| {
-                    let scale = (width / dims.0).min(height / dims.1);
-                    self.pixmap(Location::Exact(0), scale)
-                })
-            })
-            .map(|(pixmap, _)| pixmap)
+        // let opener = PdfOpener::new()?;
+        // self.cover_image()
+        //     .map(|path| self.parent.join(path)
+        //                     .to_string_lossy().into_owned())
+        //     .and_then(|path| {
+        //         self.archive.fetch(&path).ok()
+        //             .and_then(|buf| opener.open_memory(&path, &buf))
+        //             .and_then(|mut doc| {
+        //                 doc.dims(0).and_then(|dims| {
+        //                     let scale = (width / dims.0).min(height / dims.1);
+        //                     doc.pixmap(Location::Exact(0), scale)
+        //                 })
+        //             })
+        //     })
+        //     .or_else(|| {
+        //         self.dims(0).and_then(|dims| {
+        //             let scale = (width / dims.0).min(height / dims.1);
+        //             self.pixmap(Location::Exact(0), scale)
+        //         })
+        //     })
+        //     .map(|(pixmap, _)| pixmap)
+        None
     }
 
     #[inline]

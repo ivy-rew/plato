@@ -1,10 +1,10 @@
 pub mod djvu;
-pub mod pdf;
+//pub mod pdf;
 pub mod epub;
 pub mod html;
 
 mod djvulibre_sys;
-mod mupdf_sys;
+// mod mupdf_sys;
 
 use std::env;
 use std::process::Command;
@@ -23,7 +23,7 @@ use unicode_normalization::UnicodeNormalization;
 use unicode_normalization::char::{is_combining_mark};
 use serde::{Serialize, Deserialize};
 use self::djvu::DjvuOpener;
-use self::pdf::PdfOpener;
+//use self::pdf::PdfOpener;
 use self::epub::EpubDocument;
 use self::html::HtmlDocument;
 use crate::geom::{Boundary, CycleDir};
@@ -240,13 +240,14 @@ pub fn open<P: AsRef<Path>>(path: P) -> Option<Box<dyn Document>> {
                 })
             },
             _ => {
-                PdfOpener::new().and_then(|mut o| {
-                    if matches!(k.as_ref(), "mobi" | "fb2" | "xps" | "txt") {
-                        o.load_user_stylesheet();
-                    }
-                    o.open(path)
-                     .map(|d| Box::new(d) as Box<dyn Document>)
-                })
+                // PdfOpener::new().and_then(|mut o| {
+                //     if matches!(k.as_ref(), "mobi" | "fb2" | "xps" | "txt") {
+                //         o.load_user_stylesheet();
+                //     }
+                //     o.open(path)
+                //      .map(|d| Box::new(d) as Box<dyn Document>)
+                // })
+                None
             },
         }
     })

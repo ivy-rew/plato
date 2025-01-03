@@ -6,7 +6,7 @@ use crate::framebuffer::{Framebuffer, Pixmap, UpdateMode};
 use super::{View, Event, Hub, Bus, Id, ID_FEEDER, RenderQueue, RenderData, ViewId, Align};
 use crate::gesture::GestureEvent;
 use crate::input::{DeviceEvent, FingerStatus};
-use crate::document::pdf::PdfOpener;
+//use crate::document::pdf::PdfOpener;
 use crate::color::{TEXT_NORMAL, TEXT_INVERTED_HARD};
 use crate::unit::scale_by_dpi_raw;
 use crate::geom::{Rectangle, CornerSpec};
@@ -29,9 +29,9 @@ lazy_static! {
                      "font_size", "line_height", "align-justify", "align-left", "align-right",
                      "align-center", "margin", "plug", "cover", "enclosed_menu", "contrast", "gray"].iter().cloned() {
             let path = dir.join(&format!("{}.svg", name));
-            let doc = PdfOpener::new().and_then(|o| o.open(path)).unwrap();
-            let pixmap = doc.page(0).and_then(|p| p.pixmap(scale)).unwrap();
-            m.insert(name, pixmap);
+            //let doc = PdfOpener::new().and_then(|o| o.open(path)).unwrap();
+            //let pixmap = doc.page(0).and_then(|p| p.pixmap(scale)).unwrap();
+            //m.insert(name, pixmap);
         }
         m
     };
@@ -123,30 +123,30 @@ impl View for Icon {
     }
 
     fn render(&self, fb: &mut dyn Framebuffer, _rect: Rectangle, _fonts: &mut Fonts) {
-        let scheme = if self.active {
-            TEXT_INVERTED_HARD
-        } else {
-            TEXT_NORMAL
-        };
+        // let scheme = if self.active {
+        //     TEXT_INVERTED_HARD
+        // } else {
+        //     TEXT_NORMAL
+        // };
 
-        let pixmap = ICONS_PIXMAPS.get(&self.name[..]).unwrap();
-        let dx = self.align.offset(pixmap.width as i32, self.rect.width() as i32);
-        let dy = (self.rect.height() as i32 - pixmap.height as i32) / 2;
-        let pt = self.rect.min + pt!(dx, dy);
+        // let pixmap = ICONS_PIXMAPS.get(&self.name[..]).unwrap();
+        // let dx = self.align.offset(pixmap.width as i32, self.rect.width() as i32);
+        // let dy = (self.rect.height() as i32 - pixmap.height as i32) / 2;
+        // let pt = self.rect.min + pt!(dx, dy);
 
-        let background = if self.active {
-            scheme[0]
-        } else {
-            self.background
-        };
+        // let background = if self.active {
+        //     scheme[0]
+        // } else {
+        //     self.background
+        // };
 
-        if let Some(ref cs) = self.corners {
-            fb.draw_rounded_rectangle(&self.rect, cs, background);
-        } else {
-            fb.draw_rectangle(&self.rect, background);
-        }
+        // if let Some(ref cs) = self.corners {
+        //     fb.draw_rounded_rectangle(&self.rect, cs, background);
+        // } else {
+        //     fb.draw_rectangle(&self.rect, background);
+        // }
 
-        fb.draw_blended_pixmap(pixmap, pt, scheme[1]);
+        // fb.draw_blended_pixmap(pixmap, pt, scheme[1]);
     }
 
     fn resize(&mut self, rect: Rectangle, _hub: &Hub, _rq: &mut RenderQueue, _context: &mut Context) {
